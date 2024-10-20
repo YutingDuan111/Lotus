@@ -1,0 +1,91 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meal Planner</title>
+    <link rel="stylesheet" href="styles.css">
+
+</head>
+
+
+<body>
+    <h1>Generate Shopping List</h1>
+    
+    <!-- Input Form -->
+    <form id="mealForm">
+        <label for="dish">Dish:</label>
+        <input type="text" id="dish" name="dish" required><br>
+
+        <label for="portion">Portion (Number of servings):</label>
+        <input type="number" id="portion" name="portion" required><br>
+
+        <button type="button" id="addDishBtn">Add Dish to Meal Plan</button>
+    </form>
+
+    <!-- Meal Plan Section -->
+    <h2>Your Meal Plan</h2>
+    <ul id="mealPlan"></ul> <!-- This will hold the added dishes -->
+
+    <!-- Generate Shopping List Button -->
+    <button id="generateShoppingListBtn">Generate Shopping List for Meal Plan</button>
+
+    <!-- Shopping List Output -->
+    <div id="recipeOutput"></div>
+
+    <script>
+        const mealPlan = []; // Store the meal plan
+        const mealPlanList = document.getElementById('mealPlan');
+        const recipeOutput = document.getElementById('recipeOutput');
+
+        // Add dish and portion to meal plan
+        document.getElementById('addDishBtn').addEventListener('click', function() {
+            const dish = document.getElementById('dish').value;
+            const portion = document.getElementById('portion').value;
+
+            // Add to meal plan array
+            mealPlan.push({ dish, portion });
+
+            // Display the meal plan
+            const listItem = document.createElement('li');
+            listItem.textContent = `${dish} - ${portion} servings`;
+            mealPlanList.appendChild(listItem);
+
+            // Clear input fields
+            document.getElementById('dish').value = '';
+            document.getElementById('portion').value = '';
+        });
+
+        // Generate shopping list for all dishes in the meal plan
+        document.getElementById('generateShoppingListBtn').addEventListener('click', async function() {
+            const response = await fetch('http://localhost:4000/generate-shopping-list', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ mealPlan }) // Send the entire meal plan
+            });
+
+            const result = await response.json();
+            const recipeText = result.recipe;
+
+            // Parse and display the shopping list
+            const ingredientsLines = recipeText.split('\n').filter(line => line.trim() !== '');
+            let tableHtml = '<table><tr><th>Ingredient</th><th>Quantity</th></tr>';
+
+            ingredientsLines.forEach(line => {
+                const [ingredient, quantity] = line.split(':').map(part => part.trim());
+                tableHtml += `<tr><td>${ingredient}</td><td>${quantity || 'N/A'}</td></tr>`;
+            });
+
+            tableHtml += '</table>';
+            recipeOutput.innerHTML = tableHtml;
+        });
+    </script>
+</body>
+
+
+
+
+
