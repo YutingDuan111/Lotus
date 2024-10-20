@@ -80,22 +80,126 @@ table tr:hover {
     background-color: #FFD4A3;
 }
 
-
-
-
-
-/* table {
-    width: 100%;
-    border-collapse: collapse;
+.chart-container {
+    display: flex;
+    justify-content: space-between; /* 将图表并排 */
+    align-items: center;
+    margin-top: 20px;
 }
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
+.chart-box {
+    width: 45%; /* 调整每个图表的宽度 */
+    text-align: center;
 }
 
-th {
-    background-color: #4CAF50;
+canvas {
+    max-width: 100%; /* 确保图表在容器中自适应 */
+    height: auto;
+}
+
+
+
+
+
+
+/* 整体布局 */
+.container {
+    display: flex;
+}
+
+/* 侧边栏样式 */
+.sidebar {
+    width: 200px;
+    background-color: #f8b400;
+    padding: 20px;
+    height: 100vh; /* 全高度 */
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 20px 0;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
     color: white;
-} */
+    font-weight: bold;
+}
+
+.sidebar ul li a:hover {
+    color: #333;
+}
+
+/* 内容区域样式 */
+.content {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+/* Chart 样式同前文 */
+.chart-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.chart-box {
+    width: 45%;
+    text-align: center;
+}
+
+canvas {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Existing styles above */
+
+.container {
+    display: flex; /* Create a flexbox layout for the sidebar and main content */
+}
+
+.sidebar {
+    width: 200px;
+    background-color: #FF8C42; /* Bright warm orange for the sidebar background */
+    padding: 20px;
+    height: 100vh; /* Full-height sidebar */
+    position: fixed; /* Keep the sidebar fixed as you scroll */
+    top: 0;
+    left: 0;
+    color: white;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li {
+    margin: 20px 0;
+}
+
+.sidebar ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+}
+
+.sidebar ul li a:hover {
+    color: #FFD4A3; /* Lighter orange on hover */
+}
+
+.content {
+    margin-left: 220px; /* Space for the sidebar */
+    padding: 20px;
+}
+
+/* Chart section styles remain the same */
+
+
+
